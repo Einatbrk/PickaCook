@@ -32,46 +32,7 @@ app.use(express.json());
 
 // Static files
 app.use(express.static(path.join(__dirname, "../client")));
-app.use((req, res, next) => {
-  const logData = {
-    type: 'incoming',
-    route: req.originalUrl,
-    method: req.method,
-    params: req.params,
-    query: req.query,
-    body: req.body
-  };
-  logger.info(logData);
-  const originalSend = res.send;
-  const originalJson = res.json;
 
-  // Override the response.send function to log outgoing response
-  res.send = function (...args) {
-    const outgoingLogData = {
-      type: 'outgoing',
-      route: req.originalUrl,
-      method: req.method,
-      status: res.statusCode,
-      response: args[0]
-    };
-    logger.info(outgoingLogData);
-    return originalSend.apply(res, args);
-  };
-
-  // Override the response.json function to log outgoing response
-  res.json = function (...args) {
-    const outgoingLogData = {
-      type: 'outgoing',
-      route: req.originalUrl,
-      method: req.method,
-      status: res.statusCode,
-      response: args[0]
-    };
-    logger.info(outgoingLogData);
-    return originalJson.apply(res, args);
-  };
-  next();
-});
 // Authentication routes
 app.use("/auth", require("./router/authApi.js"));
 // blog routes
