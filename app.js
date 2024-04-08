@@ -12,16 +12,6 @@ const transporter = nodemailer.createTransport({
 });
 module.exports.transporter = transporter;
 
-const winston = require("winston");
-
-const logger=winston.createLogger({
-  level: 'info',
-  format: winston.format.json(),
-  transports:[
-    new winston.transports.File({filename:'server.log', create:true})
-  ]
-});
-
 
 const PORT = process.env.PORT || 3000;
 

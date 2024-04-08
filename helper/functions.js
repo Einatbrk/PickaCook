@@ -61,7 +61,6 @@ function checkUsernameMiddleware(req, res, next) {
 function uploadPostMiddleware(req, res, next) {
   const { username, title, ingredients, recipe, checkboxMarks } = req.body;
   const timestamp = new Date().toISOString();
-  console.log("Received checkboxMarks in middleware:", checkboxMarks);
 
   if (!username) {
     return res.status(400).json({ error: "Username is missing" });
@@ -110,32 +109,7 @@ function isCorrectPassword(username, password) {
     });
   });
 }
-function deleteUser(username, db) {
-  return fetch("http://localhost:3000/auth/delete-user", {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ username }),
-  }).then((response) => {
-    if (!response.ok) {
-      throw new Error(`Failed to delete user: ${response.statusText}`);
-    }
-    return response.json();
-  });
-}
 
-function performDeleteUser() {
-  const usernameToDelete = document.getElementById("delete-username").value;
-
-  deleteUser(usernameToDelete)
-    .then((response) => {
-      console.log(response.message);
-    })
-    .catch((error) => {
-      console.error("Error deleting user:", error);
-    });
-}
 function getUserEmail(username) {
   return new Promise((resolve, reject) => {
     const sql = "SELECT email FROM users WHERE username = ?";
@@ -192,13 +166,10 @@ function insertPost(
     checkboxMarks,
   };
 
-  console.log(`insertPost data: `, JSON.stringify(data));
-
   return new Promise((resolve, reject) => {
     const insertPostQuery =
       "INSERT INTO posts (title, ingredients, recipe, author, date) VALUES (?, ?, ?, ?, ?)";
     const CB = checkboxMarks;
-    console.log("Received checkboxMarks in insertPost:", CB);
     db.run(
       insertPostQuery,
       [title, ingredients, recipe, username, timestamp],
@@ -269,9 +240,7 @@ module.exports = {
   checkEmailMiddleware,
   userNameExists,
   checkEmailExists,
-  deleteUser,
   getUsername,
-  performDeleteUser,
   getUserEmail,
   isCorrectPassword,
   insertPost,
