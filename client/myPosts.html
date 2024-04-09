@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <main id="pageContent">
+    <div id="inside-blog-container">
+      <div>
+        <h1 style="text-align: left">My posts</h1>
+        <div id="posts-container"></div>
+        <script>
+          {
+            const username = localStorage.getItem("username");
+            const postsContainer = document.getElementById("posts-container");
+            if (username == null || username == undefined) {
+              const connectionAlertElement = document.createElement("div");
+              connectionAlertElement.innerHTML = `
+                  <p><h4>You must login to view your posts</h4></p>
+                  <button onclick="changeContent('./login.html')" class="myButton">Login</button>
+                `;
+              postsContainer.appendChild(connectionAlertElement);
+            } else {
+              // Fetch all posts from the server
+              fetch("http://localhost:3000/blog/posts/" + username)
+                .then((response) => response.json())
+                .then((data) => {
+                  if (data.success) {
+                    // Display posts on the page
+                    data.posts.forEach((post) => {
+                      const postElement = document.createElement("div");
+                      postElement.innerHTML = `
+                          <p><br><h4 class="title-style">Title: ${post.title}</h4></p>
+                          <p><b class="ingredient-style">Ingredients:</b><br>${post.ingredients}</br></p>
+                          <p><b clas s="instruction-style">Instructions:</b><br> ${post.recipe}</br></p>
+                          <p><b class="date-style">Date:</b> ${post.date}</p>
+                          <p><b class="categories-style">Categories:</b> ${post.checkboxes.join(", ")}</p>
+                          <hr>
+                        `;
+                      postsContainer.appendChild(postElement);
+                    });
+                  } else {
+                    console.error("Failed to fetch posts:", data.message);
+                  }
+                })
+                .catch((error) => {
+                  console.error("Error fetching posts:", error);
+                });
+            }
+          }
+        </script>
+
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

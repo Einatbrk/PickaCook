@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+    <title>LoggedIn</title>
+  </head>
+  <body>
+    <main id="pageContent">
+      <div id="logged-in-container">
+        <div class="image-container">
+          <img
+            src="./images/chocolateMousse.jpg"
+            alt="Chocolate"
+            id="ChocolateMousse"
+          />
+        </div>
+        <div style="margin-top: 40px" id="loggedInMessage">
+          You are already logged in as <span id="userId"></span>
+          <div style="margin-top: 20px">
+            Click <a href="./index.html" onclick="logout()">Here</a> to Log out
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      var userId = localStorage.getItem("username");
+      if (userId) {
+        document.getElementById("userId").innerText = userId;
+      } else {
+        console.log("User not logged in");
+      }
+    </script>
+  </body>
+</html>

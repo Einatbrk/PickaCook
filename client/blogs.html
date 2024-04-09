@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blogs</title>
+  </head>
+  <body>
+    <main id="pageContent">
+      <div class="blogs-container">
+        <div id="blog-navbar" class="blog-navbar">
+          <ul>
+            <a
+              class="blog-content-link"
+              onclick="insideBlogChangeContent('allPosts.html')"
+              >All users posts</a
+              >
+            <a
+              class="blog-content-link"
+              onclick="insideBlogChangeContent('myPosts.html')"
+              >My Posts</a
+            >
+            <a
+              class="blog-content-link"
+              onclick="insideBlogChangeContent('newPost.html')"
+              >Add new Post</a
+            >
+            <a
+              class="blog-content-link"
+              onclick="insideBlogChangeContent('managePosts.html')"
+              >Manage posts</a
+            >
+          </ul>
+        </div>
+        <div id="inside-blog-container"></div>
+      </div>
+    </main>
+  </body>
+</html>

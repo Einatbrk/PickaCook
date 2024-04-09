@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <main id="pageContent">
+    <div id="inside-blog-container">
+      <div>
+        <h1 style="text-align: left">All Pick-a-Cook Posts</h1>
+        <div id="posts-container"></div>
+
+        <script>
+          {
+            fetch("http://localhost:3000/blog/allPosts/")
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success) {
+                  const postsContainer =
+                    document.getElementById("posts-container");
+                  data.posts.forEach((post) => {
+                    const postElement = document.createElement("div");
+                    postElement.classList.add("postElement");
+                    postElement.innerHTML = `
+                      <p><h4 class="title-style">Title: ${post.title}</h4></p>
+                      <p><b class="ingredient-style">Ingredients:</b><br>${post.ingredients}</br></p>
+                      <p><b class="instruction-style">Instructions:</b><br> ${post.recipe}</br></p>
+                      <p><b class="author-style">Author:</b> ${post.author}</p>
+                      <p><b class="date-style">Date:</b> ${post.date}</p>
+                      <p><b class="categories-style">Categories:</b> ${post.checkboxes.join(", ")}</p>
+                      <br></br>
+                      <hr>
+                  `;
+                    postsContainer.appendChild(postElement);
+                  });
+                } else {
+                  console.error("Failed to fetch posts:", data.message);
+                }
+              })
+              .catch((error) => {
+                console.error("Error fetching posts:", error);
+              });
+          }
+        </script>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

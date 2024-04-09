@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>new post</title>
+  </head>
+  <body>
+    <main id="pageContent">
+      <div id="inside-blog-container">
+        <div class="new-post">
+          <h1>Manage posts</h1>
+
+          <br />
+          <div id="posts-container"></div>
+
+          <div class="edit-post" style="display: none">
+            <form id="postForm">
+              <label for="title"><b>Title:</b></label
+              ><br />
+              <input
+                type="text"
+                id="postId"
+                name=""
+                style="display: none"
+              /><br />
+              <input type="text" id="title" name="title" required /><br />
+              <p style="padding-top: 20px">
+                <label for="Ingredients"><b>Ingredients:</b></label
+                ><br />
+                <textarea
+                  id="ingredients"
+                  name="ingredients"
+                  maxlength="100"
+                  rows="4"
+                  cols="40"
+                  style="font-size: 18px"
+                  required
+                ></textarea>
+              </p>
+              <br />
+              <p id="charCounter">Characters remaining: 100</p>
+              <br />
+              <label for="recipe" require><b>Recipe:</b></label
+              ><br />
+              <textarea
+                id="recipe"
+                name="recipe"
+                maxlength="100"
+                rows="4"
+                cols="40"
+                style="font-size: 18px"
+                required
+              ></textarea
+              ><br />
+              <p id="charCount">Characters remaining: 100</p>
+              <br />
+
+              <label><b>Category:</b></label>
+              <div>
+                <input
+                  type="checkbox"
+                  id="Vegetarian"
+                  name="checkboxMarks"
+                  value="Vegetarian"
+                />
+                <label for="vegetarian">Vegetarian</label><br />
+
+                <input
+                  type="checkbox"
+                  id="Vegan"
+                  name="checkboxMarks"
+                  value="Vegan"
+                />
+                <label for="vegan">Vegan</label><br />
+
+                <input
+                  type="checkbox"
+                  id="Gluten-free"
+                  name="checkboxMarks"
+                  value="Gluten-free"
+                />
+                <label for="glutenFree">Gluten-free</label><br />
+
+                <input
+                  type="checkbox"
+                  id="5 Minutes work"
+                  name="checkboxMarks"
+                  value="5 Minutes work"
+                />
+                <label for="5MinutesWork">5 Minutes work</label><br />
+              </div>
+              <div
+                style="padding: 20px 0 0 0; font-family: 'M PLUS Rounded 1c'"
+              >
+                <button type="button" onclick="updatePost()">Save Post</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      document.getElementById("recipe").addEventListener("input", function () {
+        var maxLength = 100;
+        var currentLength = this.value.length;
+        var remainingCharacters = maxLength - currentLength;
+
+        document.getElementById("charCount").textContent =
+          "Characters remaining: " + remainingCharacters;
+        if (currentLength > maxLength) {
+          this.value = this.value.substring(0, maxLength);
+        }
+      });
+      document
+        .getElementById("ingredients")
+        .addEventListener("input", function () {
+          var maxLength = 100;
+          var currentLength = this.value.length;
+          var remainingCharacters = maxLength - currentLength;
+
+          document.getElementById("charCounter").textContent =
+            "Characters remaining: " + remainingCharacters;
+          if (currentLength > maxLength) {
+            this.value = this.value.substring(0, maxLength);
+          }
+        });
+
+      {
+        const username = localStorage.getItem("username");
+        // Fetch all posts from the server
+        fetch("http://localhost:3000/blog/posts/" + username)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              const postsContainer = document.getElementById("posts-container");
+              data.posts.forEach((post) => {
+                const postElement = document.createElement("div");
+                postElement.innerHTML = `
+                      <p><h4>Title: ${post.title}</h4></p>
+                      <p><b>Ingredients:</b><br></br>${post.ingredients}</p>
+                      <p><b>Instructions:</b><br></br> ${post.recipe}</p>
+                      <p><b>Author:</b> ${post.author}</p>
+                      <p><b>Date:</b> ${post.date}</p>
+                      <p><b>Categories:</b> ${post.checkboxes.join(", ")}</p>
+                          <button class='edit'>Edit</button>
+                          <button class='delete'>Delete</button>
+                          <hr>
+                      `;
+                postsContainer.appendChild(postElement);
+              });
+
+              document.querySelectorAll(".delete").forEach((button, index) => {
+                button.addEventListener("click", () => {
+                  fetch(
+                    "http://localhost:3000/blog/posts/" +
+                      data.posts[index].postId,
+                    {
+                      method: "DELETE",
+                    }
+                  )
+                    .then((response) => response.json())
+                    .then((data) => {
+                      if (data.success) {
+                        button.parentElement.remove();
+                      } else {
+                        console.error("Failed to delete post:", data.message);
+                      }
+                    })
+                    .catch((error) => {
+                      console.error("Error deleting post:", error);
+                    });
+                });
+              });
+
+              document.querySelectorAll(".edit").forEach((button, index) => {
+                button.addEventListener("click", () => {
+                  document.querySelector("#postId").value =
+                    data.posts[index].postId;
+                  document.querySelector(".edit-post").style.display = "block";
+                  document.querySelector("#posts-container").style.display =
+                    "none";
+                  const post = data.posts[index];
+                  document.getElementById("title").value = post.title;
+                  document.getElementById("ingredients").value =
+                    post.ingredients;
+                  document.getElementById("recipe").value = post.recipe;
+                  post.checkboxes.forEach((category) => {
+                    document.getElementById(category).checked = true;
+                  });
+                });
+              });
+            } else {
+              console.error("Failed to fetch posts:", data.message);
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching posts:", error);
+          });
+      }
+    </script>
+  </body>
+</html>

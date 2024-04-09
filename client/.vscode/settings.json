@@ -1,0 +1,8 @@
+{
+    "liveServer.settings.mimeTypes": {
+        "text/javascript": [
+            "js"
+        ]
+    },
+    "editor.inlineSuggest.showToolbar": "onHover"
+}

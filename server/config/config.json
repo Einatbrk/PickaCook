@@ -1,7 +1,7 @@
 {
   "development": {
     "dialect": "sqlite",
-    "storage": "../dataBase/blog_platform.db"
+    "storage": "../../dataBase/blog_platform.db"
   },
   "test": {
     "dialect": "sqlite",
@@ -9,6 +9,6 @@
   },
   "production": {
     "dialect": "sqlite",
-    "storage": "../dataBase/blog_platform.db"
+    "storage": "../../dataBase/blog_platform.db"
   }
 }

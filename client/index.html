@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Croissant+One&family=Space+Mono&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Croissant+One&family=M+PLUS+Rounded+1c&family=Space+Mono&family=Young+Serif&display=swap"
+    rel="stylesheet" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+  <!-- css -->
+  <link rel="stylesheet" type="text/css" href="./styles.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <title>OurBlog</title>
+</head>
+
+<body>
+  <header>
+    <div class="header-container" id="header-container">
+      <div id="inside-header-container">
+        <div id="user-details">
+          <a href="./login.html" onclick="changeContent('login.html')" class="cremeButton"
+            id="main-login-button">Login</a>
+          <div id="user-info" style="display: none"><br /></div>
+          <div>
+            <a href="./homePage.html" id="logout-button" style="display: none" onclick="logout()">Logout</a>
+          </div>
+        </div>
+        <div id="pickacook">
+          <span class="larger-text" onclick="changeContent('homePage.html')">Pick a Cook</span>
+        </div>
+      </div>
+    </div>
+    <div id="navbar" class="topnav">
+      <ul>
+        <li><a class="content-link" href="./homePage.html">Home</a></li>
+        <li><a class="content-link" href="./blogs.html">Blogs</a></li>
+        <li><a class="content-link" href="./register.html">Register</a></li>
+        <li><a class="content-link" href="./login.html">Login</a></li>
+      </ul>
+    </div>
+  </header>
+  <main id="pageContent"></main>
+  <footer></footer>
+  <script src="./main.js"></script>
+</body>
+
+</html>

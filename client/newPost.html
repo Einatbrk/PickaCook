@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>new post</title>
+</head>
+<body>
+  <main id="pageContent">
+    <div id="inside-blog-container">
+      <div class="new-post">
+        <h1>Add a new post</h1>
+        <br />
+        <div id="new-post"></div>
+        <script>
+          (function() {
+            const bloggerUserName = localStorage.getItem("username");
+            const innerBlogContainer = document.getElementById("new-post");
+
+            if (bloggerUserName == null || bloggerUserName == undefined) {
+              const connectionAlertElement = document.createElement("div");
+              connectionAlertElement.innerHTML = `
+                <p><h4> You must login to upload new posts</h4></p>
+                <button onClick="changeContent('./login.html')" class="myButton">Login</button>
+              `;
+              innerBlogContainer.appendChild(connectionAlertElement);
+            } else {
+              innerBlogContainer.innerHTML = `
+              <div class="upload-new-post">
+                <form id="postForm">
+                  <label for="title"><b>Title:</b></label><br />
+                  <input type="text" id="title" name="title" required /><br />
+                  <p style="padding-top:20px"><label for="Ingredients"><b>Ingredients:</b></label><br />
+                    <textarea
+                      id="ingredients"
+                      name="ingredients"
+                      maxlength="100"
+                      rows="4"
+                      cols="40"
+                      style="font-size: 18px;"
+                      required
+                    ></textarea
+                    ></p>
+                  <br />
+                  <p id="charCounter">Characters remaining: 100</p>
+                  <br />
+                  <label for="recipe" require><b>Recipe:</b></label><br />
+                  <textarea
+                    id="recipe"
+                    name="recipe"
+                    maxlength="100"
+                    rows="4"
+                    cols="40"
+                    style="font-size: 18px;"
+                    required
+                  ></textarea
+                  ><br />
+                  <p id="charCount">Characters remaining: 100</p>
+                  <br />
+
+                  <label><b>Category:</b></label>
+                  <div>
+                    <input
+                      type="checkbox"
+                      id="vegetarian"
+                      name="checkboxMarks"
+                      value="Vegetarian"
+                    />
+                    <label for="vegetarian">Vegetarian</label><br />
+
+                    <input
+                      type="checkbox"
+                      id="vegan"
+                      name="checkboxMarks"
+                      value="Vegan"
+                    />
+                    <label for="vegan">Vegan</label><br />
+
+                    <input
+                      type="checkbox"
+                      id="glutenFree"
+                      name="checkboxMarks"
+                      value="Gluten-free"
+                    />
+                    <label for="glutenFree">Gluten-free</label><br />
+
+                    <input
+                      type="checkbox"
+                      id="5MinutesWork"
+                      name="checkboxMarks"
+                      value="5 Minutes work"
+                    />
+                    <label for="5MinutesWork">5 Minutes work</label><br />
+                  </div>
+                  <div style="padding: 20px 0 0 0 ; font-family: 'M PLUS Rounded 1c'">
+                    <button type="button" onclick="uploadPost()">
+                      Upload Post
+                    </button>
+                  </div>
+                </form>
+              </div>
+              `;
+
+              document.getElementById("recipe").addEventListener("input", function () {
+                  var maxLength = 100;
+                  var currentLength = this.value.length;
+                  var remainingCharacters = maxLength - currentLength;
+            
+                  document.getElementById("charCount").textContent =
+                    "Characters remaining: " + remainingCharacters;
+                  if (currentLength > maxLength) {
+                    this.value = this.value.substring(0, maxLength);
+                  }
+                });
+
+              document.getElementById("ingredients").addEventListener("input", function () {
+                var maxLength = 100;
+                var currentLength = this.value.length;
+                var remainingCharacters = maxLength - currentLength;
+          
+                document.getElementById("charCounter").textContent =
+                  "Characters remaining: " + remainingCharacters;
+                if (currentLength > maxLength) {
+                  this.value = this.value.substring(0, maxLength);
+                }
+              });
+            }
+          })();
+        </script>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
