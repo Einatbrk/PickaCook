@@ -1,11 +1,3 @@
-
-
-// window.addEventListener('beforeunload', function(e){
-//   localStorage.removeItem("userId");
-//   localStorage.removeItem("username");
-//   localStorage.removeItem("lastPage");
-// });
-
 let pageName = localStorage.getItem("lastPage") ?? "./homePage.html";
 
 document.addEventListener("DOMContentLoaded", function () {
