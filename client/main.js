@@ -1,10 +1,10 @@
 
 
-window.addEventListener('beforeunload', function(e){
-  localStorage.removeItem("userId");
-  localStorage.removeItem("username");
-  localStorage.removeItem("lastPage");
-});
+// window.addEventListener('beforeunload', function(e){
+//   localStorage.removeItem("userId");
+//   localStorage.removeItem("username");
+//   localStorage.removeItem("lastPage");
+// });
 
 let pageName = localStorage.getItem("lastPage") ?? "./homePage.html";
 
@@ -369,6 +369,7 @@ function uploadPost() {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       alert("Post uploaded successfully!");
+      checkLoggedInStatus();
       return response.json();
     })
     .then((data) => {
