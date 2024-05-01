@@ -128,7 +128,6 @@ function onRegisterHandle(event) {
     .then((response) => {
       if (response.ok) {
         alert("Registration successful!");
-        changeContent('./login.html');
       } else {
         return response.text().then((errorMessage) => {
           console.error("Registration failed:", errorMessage);
@@ -140,7 +139,7 @@ function onRegisterHandle(event) {
       console.error("Error during registration:", error);
       alert("Registration failed!"); 
     });
-  changeContent("./homePage.html");
+  changeContent("./login.html");
 }
 
 async function onLoginHandle(event) {
